@@ -8,14 +8,14 @@ const path = require('path');
 const app = express();
 app.use(express.json());
 
-
+// Hard-coded secrets
 const DB_PASSWORD = 'MyDatabasePassword123!';
 const JWT_SECRET = 'super-secret-jwt-key-12345';
 const STRIPE_API_KEY = 'sk_live_51H1234567890abcdefghijklmnopqrstuvwxyz';
 const GITHUB_TOKEN = 'ghp_1234567890abcdefGHIJKLMNOPQRSTUVWXYZ';
 const SLACK_WEBHOOK = 'https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXXXXXX';
 
-
+// SQL Injection vulnerability
 app.get('/api/users', (req, res) => {
     const connection = mysql.createConnection({
         host: 'localhost',
@@ -25,7 +25,7 @@ app.get('/api/users', (req, res) => {
     });
     
     const userId = req.query.id;
-    
+    // Vulnerable SQL query
     const query = `SELECT * FROM users WHERE id = ${userId}`;
     
     connection.query(query, (error, results) => {
@@ -34,10 +34,10 @@ app.get('/api/users', (req, res) => {
     });
 });
 
-
+// Command Injection
 app.post('/api/convert', (req, res) => {
     const filename = req.body.filename;
-  
+    // Dangerous command execution
     exec(`convert ${filename} output.pdf`, (error, stdout, stderr) => {
         if (error) {
             res.status(500).send(error.message);
@@ -47,10 +47,10 @@ app.post('/api/convert', (req, res) => {
     });
 });
 
-
+// NoSQL Injection (MongoDB)
 app.post('/api/login', (req, res) => {
     const { username, password } = req.body;
-    
+    // Vulnerable to NoSQL injection
     db.collection('users').findOne({
         username: username,
         password: password
@@ -63,44 +63,44 @@ app.post('/api/login', (req, res) => {
     });
 });
 
-
+// Path Traversal
 app.get('/download', (req, res) => {
     const fileName = req.query.file;
-  
+    // No path validation
     const filePath = path.join(__dirname, 'uploads', fileName);
     res.sendFile(filePath);
 });
 
-
+// XSS vulnerability
 app.get('/search', (req, res) => {
     const searchTerm = req.query.q;
-    
+    // Reflected XSS
     res.send(`<h1>Results for: ${searchTerm}</h1>`);
 });
 
-
+// Weak cryptography
 function hashPassword(password) {
-  
+    // MD5 is broken
     return crypto.createHash('md5').update(password).digest('hex');
 }
 
-
+// Insecure random token generation
 function generateToken() {
     return Math.random().toString(36).substring(2);
 }
 
-
+// Missing rate limiting on sensitive endpoint
 app.post('/api/reset-password', (req, res) => {
     const email = req.body.email;
-    
+    // No rate limiting - vulnerable to brute force
     sendPasswordResetEmail(email);
     res.json({ message: 'Reset email sent' });
 });
 
-
+// Prototype pollution vulnerability
 app.post('/api/update-settings', (req, res) => {
     const settings = {};
-
+    // Vulnerable to prototype pollution
     merge(settings, req.body);
     res.json(settings);
 });
@@ -116,10 +116,10 @@ function merge(target, source) {
     return target;
 }
 
-
+// Regex DoS (ReDoS)
 app.post('/validate-email', (req, res) => {
     const email = req.body.email;
-
+    // Vulnerable regex pattern
     const emailRegex = /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6})*$/;
     if (emailRegex.test(email)) {
         res.json({ valid: true });
@@ -128,22 +128,23 @@ app.post('/validate-email', (req, res) => {
     }
 });
 
-
+// CORS misconfiguration
 app.use((req, res, next) => {
-
+    // Allows any origin
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Credentials', 'true');
     next();
 });
 
-
+// Missing input validation
 app.post('/api/create-user', (req, res) => {
     const userData = req.body;
+    // No validation of input
     database.insert(userData);
     res.json({ success: true });
 });
 
-
+// Complex function (code smell)
 function processUserData(user, settings, options, flags, mode, context, environment, config, metadata) {
     let result;
     if (settings.active) {
@@ -182,7 +183,7 @@ function processUserData(user, settings, options, flags, mode, context, environm
     return result;
 }
 
-
+// Duplicate code block 1
 function calculateDiscount(order) {
     let total = 0;
     for (let item of order.items) {
@@ -198,7 +199,7 @@ function calculateDiscount(order) {
     return total;
 }
 
-
+// Duplicate code block 2
 function calculateTotal(cart) {
     let total = 0;
     for (let item of cart.items) {
@@ -214,7 +215,7 @@ function calculateTotal(cart) {
     return total;
 }
 
-
+// Dead code
 function neverCalledFunction() {
     console.log('This is never executed');
     return 123;
@@ -226,29 +227,29 @@ function obsoleteFunction() {
     return x + y;
 }
 
-
+// Functions missing documentation
 function processPayment(amount, currency, method) {
-
+    // No docstring
 }
 
 function validateUser(userId) {
-
+    // No docstring
 }
 
 function transformData(input) {
-
+    // No docstring
 }
 
-
+// Insecure cookie settings
 app.use(require('cookie-session')({
     name: 'session',
     keys: ['key1', 'key2'],
-    secure: false,  
-    httpOnly: false,  
-    sameSite: 'none'  
+    secure: false,  // Should be true in production
+    httpOnly: false,  // Should be true
+    sameSite: 'none'  // Vulnerable to CSRF
 }));
 
 app.listen(3000, () => {
     console.log('Server running on port 3000');
-    console.log(`Using API key: ${STRIPE_API_KEY}`); 
+    console.log(`Using API key: ${STRIPE_API_KEY}`); // Logging secrets
 });
