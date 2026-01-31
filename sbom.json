@@ -1,0 +1,177 @@
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.4",
+  "version": 1,
+  "metadata": {
+    "timestamp": "2024-01-15T10:00:00Z",
+    "component": {
+      "type": "application",
+      "name": "vulnerable-code-repo",
+      "version": "1.0.0"
+    }
+  },
+  "components": [
+    {
+      "type": "library",
+      "name": "Flask",
+      "version": "0.12.2",
+      "purl": "pkg:pypi/flask@0.12.2",
+      "vulnerabilities": [
+        {
+          "id": "CVE-2018-1000656",
+          "source": "NVD",
+          "ratings": [{"severity": "high", "score": 7.5}],
+          "description": "Denial of Service via incorrect encoding"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "Django",
+      "version": "1.11.0",
+      "purl": "pkg:pypi/django@1.11.0",
+      "vulnerabilities": [
+        {
+          "id": "CVE-2019-19844",
+          "source": "NVD",
+          "ratings": [{"severity": "critical", "score": 9.8}],
+          "description": "Account takeover vulnerability"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "PyYAML",
+      "version": "3.12",
+      "purl": "pkg:pypi/pyyaml@3.12",
+      "vulnerabilities": [
+        {
+          "id": "CVE-2017-18342",
+          "source": "NVD",
+          "ratings": [{"severity": "critical", "score": 9.8}],
+          "description": "Arbitrary code execution via yaml.load"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "express",
+      "version": "4.16.0",
+      "purl": "pkg:npm/express@4.16.0",
+      "vulnerabilities": [
+        {
+          "id": "CVE-2022-24999",
+          "source": "NVD",
+          "ratings": [{"severity": "high", "score": 7.5}],
+          "description": "Open redirect vulnerability"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "lodash",
+      "version": "4.17.4",
+      "purl": "pkg:npm/lodash@4.17.4",
+      "vulnerabilities": [
+        {
+          "id": "CVE-2019-10744",
+          "source": "NVD",
+          "ratings": [{"severity": "critical", "score": 9.1}],
+          "description": "Prototype pollution vulnerability"
+        },
+        {
+          "id": "CVE-2020-8203",
+          "source": "NVD",
+          "ratings": [{"severity": "high", "score": 7.4}],
+          "description": "Prototype pollution in zipObjectDeep"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "log4j-core",
+      "version": "2.14.0",
+      "purl": "pkg:maven/org.apache.logging.log4j/log4j-core@2.14.0",
+      "vulnerabilities": [
+        {
+          "id": "CVE-2021-44228",
+          "source": "NVD",
+          "ratings": [{"severity": "critical", "score": 10.0}],
+          "description": "Log4Shell - Remote code execution"
+        },
+        {
+          "id": "CVE-2021-45046",
+          "source": "NVD",
+          "ratings": [{"severity": "critical", "score": 9.0}],
+          "description": "DoS and RCE via JNDI lookup"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "jackson-databind",
+      "version": "2.9.0",
+      "purl": "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.9.0",
+      "vulnerabilities": [
+        {
+          "id": "CVE-2019-12384",
+          "source": "NVD",
+          "ratings": [{"severity": "high", "score": 8.1}],
+          "description": "Deserialization vulnerability"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "mysql-connector-java",
+      "version": "5.1.40",
+      "purl": "pkg:maven/mysql/mysql-connector-java@5.1.40",
+      "vulnerabilities": [
+        {
+          "id": "CVE-2018-3258",
+          "source": "NVD",
+          "ratings": [{"severity": "medium", "score": 6.5}],
+          "description": "Unspecified vulnerability"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "symfony/symfony",
+      "version": "2.8.0",
+      "purl": "pkg:composer/symfony/symfony@2.8.0",
+      "vulnerabilities": [
+        {
+          "id": "CVE-2019-10909",
+          "source": "NVD",
+          "ratings": [{"severity": "high", "score": 8.8}],
+          "description": "CSRF token fixation"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "rails",
+      "version": "4.2.0",
+      "purl": "pkg:gem/rails@4.2.0",
+      "vulnerabilities": [
+        {
+          "id": "CVE-2016-6316",
+          "source": "NVD",
+          "ratings": [{"severity": "high", "score": 7.5}],
+          "description": "XSS vulnerability"
+        }
+      ]
+    }
+  ],
+  "dependencies": [
+    {
+      "ref": "pkg:pypi/flask@0.12.2",
+      "dependsOn": ["pkg:pypi/jinja2@2.10", "pkg:pypi/werkzeug@0.14"]
+    },
+    {
+      "ref": "pkg:npm/express@4.16.0",
+      "dependsOn": ["pkg:npm/body-parser@1.18.2"]
+    }
+  ]
+}
