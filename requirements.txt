@@ -1,0 +1,16 @@
+# Vulnerable dependencies (SCA issues)
+Flask==0.12.2  # Multiple known vulnerabilities CVE-2018-1000656, CVE-2019-1010083
+Django==1.11.0  # CVE-2019-19844, CVE-2020-7471
+requests==2.6.0  # CVE-2018-18074
+Pillow==5.0.0  # Multiple CVEs including CVE-2019-16865
+PyYAML==3.12  # CVE-2017-18342 - Arbitrary code execution
+urllib3==1.24.1  # CVE-2019-11324, CVE-2020-26137
+Jinja2==2.10  # CVE-2019-10906
+SQLAlchemy==1.2.0  # Multiple vulnerabilities
+cryptography==2.0  # Outdated, multiple CVEs
+paramiko==2.0.0  # CVE-2018-1000805
+lxml==4.2.0  # CVE-2018-19787, CVE-2020-27783
+beautifulsoup4==4.6.0
+certifi==2018.1.18
+numpy==1.15.0  # CVE-2019-6446
+pandas==0.23.0
